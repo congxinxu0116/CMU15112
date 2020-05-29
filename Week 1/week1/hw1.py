@@ -69,7 +69,7 @@ def colorBlender(rgb1, rgb2, midpoints, n):
             return roundHalfUp(x - abs(x - y)/(mp + 1) * n)
     
     red1 = rgb1 // 10**6
-    green1 = rgb1 // 10**3 - red1 * 12000**3
+    green1 = rgb1 // 10**3 - red1 * 10**3
     blue1 = rgb1 - red1 * 10**6 - green1 * 10 **3
     # print(red1, green1, blue1)
     
@@ -83,6 +83,10 @@ def colorBlender(rgb1, rgb2, midpoints, n):
         green_mid = mid(x = green1, y = green2, mp = midpoints, n = n)
         blue_mid = mid(x = blue1, y = blue2, mp = midpoints, n = n)
         return red_mid*(10**6) + green_mid*(10**3) + blue_mid
+
+def largestPerfectSquare(n):
+    x = math.floor(n**0.5)
+    return x**2
 
 #################################################
 # Bonus/Optional functions for you to write
@@ -227,6 +231,13 @@ def testBonusFindIntRootsOfCubic():
     testFindIntRootsOfCubicCase(1, 2, 3, 4)
     print('Passed.')
 
+def testLPS():
+    print('Testing largestPerfectSquare()...', end='')
+    assert(largestPerfectSquare(24) == 16)
+    assert(largestPerfectSquare(25) == 25)
+    assert(largestPerfectSquare(26) == 25)
+    print('Passed')
+
 #################################################
 # testAll and main
 #################################################
@@ -237,6 +248,7 @@ def testAll():
     testNumberOfPoolBalls()
     testNumberOfPoolBallRows()
     testColorBlender()
+    testLPS()
     # testBonusPlayThreeDiceYahtzee()
     # testBonusFindIntRootsOfCubic()
 
