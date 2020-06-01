@@ -144,17 +144,70 @@ def nthAdditivePrime(n):
                 found += 1
     return guess
 
+def getnumber(n, digit):
+    # digit start with 1
+    if (digit > 0 and digit <= digitCount(n)):
+        return n // 10 ** (digit - 1) % 10
+    else:
+        return False
+
+def IsPalindromic(n):
+    dc = digitCount(n)    
+    i = 0
+    while ((1 + i) <= (dc - i)):
+        if(getnumber(n, i + 1) != getnumber(n, dc - i)):
+            return False
+        i += 1
+    return True
+
+def IsPalindromicPrime(n):
+    return (IsPalindromic(n) and IsPrime(n))
+
 def nthPalindromicPrime(n):
-    return 42
+    found = 0
+    guess = 0
+    while (found <= n):
+        guess += 1
+        if (IsPalindromicPrime(guess)):
+            found += 1
+    return guess
+
+def rotate(n):
+    return (n % 10) * (10 ** (digitCount(n) - 1)) + (n // 10)
+
 
 def isRotation(x, y):
-    return 42
+    if (digitCount(x) == digitCount(y)):
+        i = 0
+        while (i < digitCount(x)):
+            if (x == y):
+                return True
+            else:
+                x = rotate(x)
+                i += 1
+    return False
 
 def findZeroWithBisection(f, x0, x1, epsilon):
-    return 42
+    while (abs(x1 - x0) > epsilon):
+        xmid = (x1 + x0) / 2
+        print(xmid)
+        if (almostEqual(f(xmid), 0)):
+            return xmid
+        elif ((f(xmid) > 0 and f(x0) > 0) 
+              or (f(xmid) < 0 and f(x0) < 0)):
+            x0 = xmid
+        else:
+            x1 = xmid
 
 def carrylessAdd(x1, x2):
-    return 42
+    i = 1
+    result = 0
+    while (i <= max(digitCount(x1), digitCount(x2))):
+        x1_i = getnumber(x1, i)        
+        x2_i = getnumber(x2, i)        
+        result = result + ((x1_i + x2_i) % 10) * 10**(i - 1)
+        i += 1
+    return result
 
 def drawDashedLine(dashLength, canvas, width, height):
     pass
