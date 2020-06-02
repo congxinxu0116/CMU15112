@@ -25,15 +25,88 @@ def roundHalfUp(d):
     # https://docs.python.org/3/library/decimal.html#rounding-modes
     return int(decimal.Decimal(d).to_integral_value(rounding=rounding))
 
+def digitCount(n):
+    n = abs(n)
+    # count the number of digits in n
+    i = 0 # Count record
+    x = 1 # Integer dividion check
+    while (x > 0):
+        x = n // 10
+        n //= 10
+        i += 1
+    return i
+
+def getnumber(n, i):
+    # n is the number
+    # i is the i-th digit
+    # getnumber(3528, 3) = 5
+    
+    if (i <= digitCount(n)):
+        return n // 10 ** (i - 1) % 10
+
+
 #################################################
 # Functions for you to write
 ################################################
 
 def longestDigitRun(n):
-    return 42        
+    n = abs(n)
+    if (n < 10):
+        return n
+    # Find Consecutive
+    # Find Length
+    # Compare length
+    # Compare number
+    i = 0
+    found = 0    
+    length = 1
+    newlength = 1
+    result = 10
+    while (i <= digitCount(n)-2):
+        digit0 = getnumber(n, i + 1)
+        nextdigit = getnumber(n, i + 2)
+        if (digit0 == nextdigit):
+            found = digit0
+            newlength += 1
+            if (length <= newlength):
+                length = newlength
+                # newlength = 1
+                # print(length)
+                if (found < result):
+                    result = found
+                    # print(result)
+        else: 
+            newlength = 1
+        i += 1
+    return result       
+
+def isProperty309(n):
+    n = n**5
+    check = 0
+    for x in range(0, 9 + 1):
+        i = 1
+        while (i <= digitCount(n)):
+            if (x != getnumber(n, i)):
+                i += 1
+            else:
+                check += 1 
+                break 
+        # print("Digit", x, "found.")
+    if (check == 10):
+        return True
+    else:
+        # print(check)
+        return False
+    
 
 def nthWithProperty309(n):
-    return 42
+    found = 0 
+    guess = 0
+    while (found <= n): 
+        if (isProperty309(guess)):
+            found += 1
+        guess += 1 
+    return guess - 1
 
 def nthKaprekarNumber(n):
     return 42
