@@ -114,32 +114,176 @@ def nthKaprekarNumber(n):
 def nearestKaprekarNumber(n):
     return 42
 
+def fasterIsPrime(n):
+    if (n < 2):
+        return False 
+    if (n == 2):
+        return True
+    if (n % 2 == 0):
+        return False
+    maxFactor = roundHalfUp(n ** 0.5)
+    for factor in range(3, maxFactor + 1, 2):
+        if (n % factor == 0):
+            return False
+    return True
+
+
+def isLeftTruncatablePrime(n):
+    if (fasterIsPrime(n)):
+        check = 0
+        for i in range(1, digitCount(n)):
+            if (fasterIsPrime(n % 10**i)):
+                check += 1
+        
+        if (check == digitCount(n) - 1):
+            return True
+        else:
+            return False
+    
+    return False
+
 def nthLeftTruncatablePrime(n):
-    return 42
+    found = 0 
+    guess = 0
+    while (found <= n): 
+        if (isLeftTruncatablePrime(guess)):
+            found += 1
+        guess += 1 
+    return guess - 1
+
+def isCarol(n):
+    k = math.log((n + 2)**(0.5) + 1, 2)
+    if (k == roundHalfUp(k)):
+        return True
+    else: 
+        return False
+
+def isCarolPrime(n):
+    if (isCarol(n) and fasterIsPrime(n)):
+        return True
+    else:
+        return False
 
 def nthCarolPrime(n):
-    return 42
+    found = 0 
+    guess = 0
+    while (found <= n): 
+        if (isCarolPrime(guess)):
+            found += 1
+        guess += 1
+    return guess - 1
 
 def sumOfSquaresOfDigits(n):
-    return 42
+    i = 1
+    result = 0
+    while (i <= digitCount(n)):
+        square = getnumber(n,i) ** 2
+        result += square
+        i+= 1
+    
+    return result
 
 def isHappyNumber(n):
-    return 42
+    output = 0
+    while (output != 1 or output != 4):
+        output = sumOfSquaresOfDigits(n)
+        
+        if (output == 1):
+            return True
+        elif (output == 4):
+            return False
+        else:
+            n = output
+
 
 def nthHappyNumber(n):
-    return 42
+    found = 0 
+    guess = 1
+    while (found <= n): 
+        if (isHappyNumber(guess)):
+            found += 1
+        guess += 1
+    return guess - 1
 
 def isHappyPrime(n):
-    return 42
+    return (isHappyNumber(n) and fasterIsPrime(n))
 
 def nthHappyPrime(n):
-    return 42
+    found = 0 
+    guess = 1
+    while (found <= n): 
+        if (isHappyPrime(guess)):
+            found += 1
+        guess += 1
+    return guess - 1
+
+def IsPowerfulNumber(n):
+    if (n == 1): return True
+    a = 1
+    b = 1
+    while (a < n):
+        while (b < n):
+            if (((n % a**3 == 0 
+                  and n % b**2 == 0
+                  and a**3 * b**2 == n) 
+                or (n % a**2 == 0 
+                  and n % b**3 == 0 
+                  and a**2 * b**3 == n))):
+                return True
+            else:
+                b += 1                
+        a += 1
+        b = 1        
+    return False
 
 def nthPowerfulNumber(n):
-    return 42
+    found = 0 
+    guess = 0
+    while (found <= n): 
+        if (IsPowerfulNumber(guess)):
+            found += 1
+        guess += 1
+    return guess - 1
+
+def rotate(n):
+    return (n % 10) * (10 ** (digitCount(n) - 1)) + (n // 10)
+
+def primeWithNoZero(n):
+    if (fasterIsPrime(n)):
+        i = 1
+        check = 0
+        while (i <= digitCount(n)):
+            if (getnumber(n, i) == 0):
+                return False
+            else:
+                i += 1
+    else:
+        return False
+    return True
+
+def isCircularPrime(n):
+    if (primeWithNoZero(n)):
+        check = 0
+        i = 0
+        while (i <= digitCount(n)):
+            if (fasterIsPrime(n)):
+                n = rotate(n)
+                i += 1
+            else:
+                return False
+    else:
+        return False
+
+    return True   
 
 def nthCircularPrime(n):
-    return 42
+    found = 0 
+    guess = 0
+    while (found <= n): 
+        if (isCircularPrime(guess)):
+            found += 1
+        guess += 1
+    return guess - 1
 
 #################################################
 # Test Functions
@@ -301,10 +445,10 @@ def testNthCircularPrime():
 def testAll():
     testLongestDigitRun()
     testNthWithProperty309()
-    testNthKaprekarNumber()
-    testNearestKaprekarNumber()
+    # testNthKaprekarNumber()
+    # testNearestKaprekarNumber()
     testNthLeftTruncatablePrime()
-    testNthCarolPrime()
+    # testNthCarolPrime()
     testSumOfSquaresOfDigits()
     testIsHappyNumber()
     testNthHappyNumber()
