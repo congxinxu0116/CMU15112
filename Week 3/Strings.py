@@ -329,4 +329,65 @@ print("Dogs and cats!".find("and"))         # 5
 print("Dogs and cats!".find("or"))          # -1
 print("-------")
 print("Dogs and cats!".index("and"))        # 5
-print("Dogs and cats!".index("or"))         # crash!
+# print("Dogs and cats!".index("or"))         # crash!
+
+# String Formatting
+## format a string with %s 
+breed = "beagle"
+print("Did you see a %s?" % breed)
+
+## format an integer with %d 
+dogs = 42
+print("There are %d dogs." % dogs)
+
+## format a float with %f
+grade = 87.385
+print("Your current grade is %f!" % grade)
+
+## format a float with %.[precision]f
+grade = 87.385
+print("Your current grade is %0.1f!" % grade)
+print("Your current grade is %0.2f!" % grade)
+print("Your current grade is %0.3f!" % grade)
+print("Your current grade is %0.4f!" % grade)
+
+## format multiple values
+dogs = 42
+cats = 18
+exclamation = "Wow"
+print("There are %d dogs and %d cats. %s!!!" % (dogs, cats, exclamation))
+
+## format right-aligned with %[minWidth]
+dogs = 42
+cats = 31
+
+print("%10s %10s" % ("dogs", "cats"))
+print("%10d %10d" % (dogs, cats))
+
+## format left-aligned with %-[minWidth]
+dogs = 42
+cats = 3
+print("%-10s %-10s" % ("dogs", "cats"))
+print("%-10d %-10d" % (dogs, cats))
+
+## String Formatting with f Strings
+# We saw this example back in week1!
+# It shows a nice relatively new way to format strings:
+
+x = 42
+y = 99
+# Place variable names in {squiggly braces} to print their values, like so:
+print(f'Did you know that {x} + {y} is {x+y}?')
+
+# Basic File IO
+
+# Note: As this requires read-write access to your hard drive,
+#       this will not run in the browser in Brython.
+
+def readFile(path):
+    with open(path, "rt") as f:
+        return f.read()
+
+def writeFile(path, contents):
+    with open(path, "wt") as f:
+        f.write(contents)
