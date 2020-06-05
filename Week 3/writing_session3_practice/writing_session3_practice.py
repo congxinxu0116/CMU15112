@@ -5,6 +5,7 @@
 import cs112_f19_week3_linter
 import math
 from tkinter import *
+import string
 
 #################################################
 # Helper functions
@@ -40,16 +41,58 @@ def rotateString(s, k):
 def applyCaesarCipher(message, shift):
     output = ""
     for i in message:
-        x = ord(i)+ shift
-        output = output + chr(x)
+        if (i in string.ascii_lowercase):
+            x = (ord(i) + shift - ord('a')) % 26
+            x = chr(x + ord('a'))
+        elif (i in string.ascii_uppercase):
+            x = (ord(i) + shift - ord('A')) % 26
+            x = chr(x + ord('A'))
+        else:
+            x = i        
+        output = output + x
     return output
 
 
 def hasBalancedParentheses(s):
-    return 42
+    right = 0
+    for i in s:
+        if (ord(i) == ord('(')):
+            right += 1            
+        elif (ord(i) == ord(')')):
+            if (right > 0):
+                right -= 1
+            else:
+                return False
+        else:
+            continue    
+    if (right == 0):
+        return True
+    else:
+        return False
 
 def largestNumber(s):
-    return 42
+    i = 0 # total index for s
+    j = 0 # index for digits
+    k = 0 # index for non-digits
+    number = ""
+    largest = 0
+    while (i < len(s)):
+        if (s[i] in string.digits):
+            j = i
+            while (j < len(s)):
+                number = number + s[j] 
+                if (j + 1 >= len(s) 
+                    or s[j + 1] not in string.digits):
+                    largest = max(largest, int(number))
+                    number = ""
+                    break
+                else:
+                    j += 1
+        else:
+            k += 1
+        i += 1
+    if (k != len(s)):
+        return largest
 
 def longestSubpalindrome(s):
     return 42

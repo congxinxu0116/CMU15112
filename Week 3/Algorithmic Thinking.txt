@@ -1,0 +1,22 @@
+Step 1: understand the problem
+- Define it precisely
+    - what are the input
+    - what are the output
+    - what constraints exist?
+
+- Could you describe the problem to someone well 
+    enough for them to pass the same test cases?
+
+
+Step 2: Devising a Plan
+- Identify the level of problem solving needed
+    - Translate, translate equations to python code
+    - Apply, apply patterns to new problems
+    - Generate, generate a new algorithm
+        - Induction 
+        - Top-Down Design
+        - Human Computer
+
+Step 3: Carry out the plan
+
+Step 4: Review your work
