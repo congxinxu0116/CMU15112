@@ -34,17 +34,80 @@ def roundHalfUp(d):
 #################################################
 
 def patternedMessage(msg, pattern):
-    return 42
+    i = 0 # index of msg
+    j = 0 # index of pattern
+    msg = msg.replace(' ', "")
+    lengthOfMsg = len(msg)
+    output = """"""
+    while (i < len(pattern)):
+        if (pattern[i].isspace()):
+            output = output + pattern[i]
+        else:
+            output = output + msg[j % lengthOfMsg]
+            j += 1
+        i += 1
+    return output.strip()
 
 #################################################
 # encodeRightLeftRouteCipher + decodeRightLeftRouteCipher
 #################################################
+# getLetter(0, 1, 3, "WEATTACKATDAWN")
+def getLetter(row, col, rows, text):
+    # print(rows * col + row)
+    return text[rows * col + row]
 
 def encodeRightLeftRouteCipher(text, rows):
-    return 42
+    cols = math.ceil(len(text) / rows)
+    i = ord('z')
+    while (len(text) < rows * cols):
+        text = text + chr(i)
+        i -= 1
+    
+    output = str(rows)
+    for j in range(0, rows):
+        for k in range(0, cols):
+            if (j % 2 == 0):
+                alternate = k
+            else:
+                alternate = cols - k - 1 
+                           
+            output = output + getLetter(row = j,
+                                    col = alternate,
+                                    rows = rows,
+                                    text = text)
+    return output
+
+
+def reverseString(s):
+    return s[::-1]
+def getI(row, col, cols):
+    return row * cols + col
 
 def decodeRightLeftRouteCipher(cipher):
-    return 42
+    rows = int(cipher[0])
+    cols = int((len(cipher) - 1) / rows)
+    cipher = cipher[1:]
+    i = 0
+    revCipher = ''
+    while (i < rows):
+        tmp = cipher[(cols*i):(cols*(i + 1))]
+        if (i % 2 == 0):
+            revCipher = revCipher + tmp
+        else:
+            revCipher = revCipher + reverseString(tmp)
+        i += 1
+
+    output = ""
+    for j in range(0, cols):
+        for k in range(0, rows):
+            msg = revCipher[getI(row = k, col = j, cols = cols)]
+            if (msg.islower()):
+                continue
+            else:
+                output = output + msg
+# revCipher = 'WTCTWETKDNAAAAz' 
+# revCipher[getI(row = k,col = j,cols = cols)]
+    return output
 
 #################################################
 # drawSimpleTortoiseProgram
