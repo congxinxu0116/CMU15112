@@ -64,6 +64,17 @@ def movieAwards(oscarResults):
         d[i[1]] = tmp
     return d
 
+def friendsOfFriends(d):
+    output = dict()
+    for i in d: # self
+        output[i] = set()
+        for j in d[i]:
+            for k in d[j]:
+                if (k not in d[i] 
+                    and k != i):
+                    output[i].add(k)
+    return output
+
 #################################################
 # Test Functions
 #################################################
@@ -106,6 +117,30 @@ def testmovieAwards():
         "Roma" : 1
     }
     assert(movieAwards(a) == b)
+    
+    print('Passed.')
+
+def testfriendsOfFriends():
+    print('Testing friendsOfFriends()... ', end='')
+    d = { }
+    d["jon"] = set(["arya", "tyrion"])
+    d["tyrion"] = set(["jon", "jaime", "pod"])
+    d["arya"] = set(["jon"])
+    d["jaime"] = set(["tyrion", "brienne"])
+    d["brienne"] = set(["jaime", "pod"])
+    d["pod"] = set(["tyrion", "brienne", "jaime"])
+    d["ramsay"] = set()   
+
+    e = {
+        'tyrion': {'arya', 'brienne'}, 
+        'pod': {'jon'}, 
+        'brienne': {'tyrion'}, 
+        'arya': {'tyrion'}, 
+        'jon': {'pod', 'jaime'}, 
+        'jaime': {'pod', 'jon'}, 
+        'ramsay': set()
+        }
+    assert(movieAwards(d) == e)
     
     print('Passed.')
 #################################################
